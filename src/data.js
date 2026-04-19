@@ -1,0 +1,595 @@
+/* ============================================================
+   Seed data — the 5 rooms and their starter boards
+============================================================ */
+
+const ROOMS = [
+  {
+    id: 'nook',
+    num: '01',
+    name: 'Bedroom Nook',
+    location: '3rd Floor',
+    sheet: 'A-101',
+    subtitle: 'Reading corner + built-ins',
+    scope: 'diy',
+  },
+  {
+    id: 'bath-down',
+    num: '02',
+    name: 'Downstairs Bath',
+    location: 'Ground Floor',
+    sheet: 'A-102',
+    subtitle: 'Powder room refresh',
+    scope: 'diy',
+  },
+  {
+    id: 'bath-up',
+    num: '03',
+    name: 'Upstairs Bath',
+    location: '2nd Floor',
+    sheet: 'A-103',
+    subtitle: 'Clawfoot + beadboard',
+    scope: 'diy',
+  },
+  {
+    id: 'laundry',
+    num: '04',
+    name: 'Laundry Room',
+    location: 'Ground Floor',
+    sheet: 'A-104',
+    subtitle: 'Utility, prettier',
+    scope: 'mixed',
+    pro: 'Cabinetry contractor — TBD',
+  },
+  {
+    id: 'playroom',
+    num: '05',
+    name: 'Playroom / Library',
+    location: 'Ground Floor',
+    sheet: 'A-105',
+    subtitle: 'Family room w/ books',
+    scope: 'diy',
+  },
+  {
+    id: 'wetbar',
+    num: '06',
+    name: 'Coffee + Wet Bar',
+    location: 'Ground Floor',
+    sheet: 'A-106',
+    subtitle: 'Morning coffee, evening cocktails',
+    scope: 'pro',
+    pro: 'deVOL Kitchens — design + build',
+  },
+];
+
+/* Uploaded images in the project */
+const UPLOADED_IMAGES = [
+  '/uploads/inspiration_images-1776621006745.jpeg',
+  '/uploads/inspiration_images-1776621011524.jpeg',
+  '/uploads/inspiration_images-1776621016423.jpeg',
+];
+
+/* Starter boards — one per room, opinionated so the page never feels empty */
+const STARTER_BOARDS = {
+  'bath-up': {
+    photos: [
+      {
+        id: 'p1',
+        src: '/uploads/inspiration_images-1776621016423.jpeg',
+        x: 280, y: 260, w: 340, h: 340,
+        caption: 'deVOL — blue beadboard + clawfoot',
+        src_note: 'Instagram, @devolkitchens',
+        rot: -2.2,
+      },
+      {
+        id: 'p2',
+        kind: 'placeholder',
+        x: 700, y: 300, w: 280, h: 260,
+        caption: 'brass shower fittings',
+        src_note: 'tbd — pinterest',
+        rot: 1.8,
+      },
+      {
+        id: 'p3',
+        kind: 'placeholder',
+        x: 1040, y: 260, w: 240, h: 320,
+        caption: 'encaustic floor tile',
+        src_note: 'tbd — bert & may',
+        rot: -1.2,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 680, y: 620, color: 'yellow', rot: -3.5,
+        text: "Tub paint: Farrow & Ball 'Setting Plaster'?\nTalk to plumber re: floor-mount supply.",
+        author: 'M',
+      },
+      {
+        id: 's2', x: 1060, y: 640, color: 'blue', rot: 2.5,
+        text: "LOVE the wainscot height ~ 4' — lets art gallery above breathe.",
+        author: 'W',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1380, y: 300, color: 'blue', label: 'beadboard wainscot' },
+      { id: 't2', x: 1380, y: 340, color: 'red', label: 'clawfoot tub' },
+      { id: 't3', x: 1380, y: 380, color: 'green', label: 'Shrigley zodiac print' },
+      { id: 't4', x: 1380, y: 420, color: 'yellow', label: 'patterned floor' },
+      { id: 't5', x: 1380, y: 460, color: 'red', label: 'brass fixtures' },
+    ],
+    list: {
+      id: 'l1', x: 1380, y: 540,
+      title: 'To-do',
+      sub: 'punch list',
+      items: [
+        { text: 'measure room + door swing', done: true },
+        { text: 'sample paint chips (4)', done: true },
+        { text: 'order beadboard paneling', done: false },
+        { text: 'source clawfoot — reclaimed?', done: false },
+        { text: 'tile estimate', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 280, y: 760,
+      title: 'Phase plan',
+      phases: [
+        { label: 'Demo + paint', meta: 'Apr — 2 wkds', status: 'done' },
+        { label: 'Beadboard install', meta: 'May', status: 'active' },
+        { label: 'Tile floor', meta: 'Jun — contractor', status: 'todo' },
+        { label: 'Plumbing + tub set', meta: 'Jul', status: 'todo' },
+        { label: 'Styling + art hang', meta: 'Aug', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 820,
+      title: 'Sourcing',
+      items: [
+        { name: 'Setting Plaster eggshell', vendor: 'Farrow & Ball', price: '$120/gal', url: '#' },
+        { name: 'Winchester beadboard', vendor: 'Home Depot', price: '$38/panel', url: '#' },
+        { name: 'Windsor Clawfoot 66"', vendor: 'Signature Hardware', price: '$2,450', url: '#' },
+        { name: 'Purbeck tile 8×8', vendor: 'Bert & May', price: '$18/sqft', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1100, y: 820,
+      title: 'Paint palette',
+      chips: [
+        { name: "Cook's Blue", vendor: 'Farrow & Ball', hex: '#4A6F8A', use: 'wainscoting', code: 'No. 237' },
+        { name: 'Setting Plaster', vendor: 'Farrow & Ball', hex: '#E8CFC1', use: 'walls', code: 'No. 231' },
+        { name: 'Pointing', vendor: 'Farrow & Ball', hex: '#EFE8DB', use: 'trim / ceiling', code: 'No. 2003' },
+      ],
+    },
+  },
+
+  'bath-down': {
+    photos: [
+      {
+        id: 'p1', kind: 'placeholder',
+        x: 260, y: 260, w: 300, h: 280,
+        caption: 'skirted sink (gingham?)',
+        src_note: 'tbd — frederic mag',
+        rot: -1.5,
+      },
+      {
+        id: 'p2', kind: 'placeholder',
+        x: 600, y: 280, w: 260, h: 320,
+        caption: 'scalloped mirror',
+        src_note: 'tbd',
+        rot: 2.1,
+      },
+      {
+        id: 'p3', kind: 'placeholder',
+        x: 900, y: 260, w: 320, h: 260,
+        caption: 'wallpaper moment',
+        src_note: 'tbd — sister parish?',
+        rot: -1.8,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 640, y: 660, color: 'pink', rot: -2.5,
+        text: "Powder room = go BOLD.\nWallpaper ceiling + all.",
+        author: 'W',
+      },
+      {
+        id: 's2', x: 920, y: 640, color: 'yellow', rot: 3,
+        text: 'Tiny room — 1 big idea.\nMirror + light fixture = jewelry.',
+        author: 'M',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1320, y: 300, color: 'red', label: 'patterned wallpaper' },
+      { id: 't2', x: 1320, y: 340, color: 'blue', label: 'skirted vanity' },
+      { id: 't3', x: 1320, y: 380, color: 'green', label: 'brass sconce' },
+      { id: 't4', x: 1320, y: 420, color: 'yellow', label: 'scalloped edges' },
+    ],
+    list: {
+      id: 'l1', x: 1320, y: 500,
+      title: 'To-do',
+      sub: 'punch list',
+      items: [
+        { text: 'measure + photograph existing', done: false },
+        { text: 'wallpaper samples (3)', done: false },
+        { text: 'find skirted sink fabric', done: false },
+        { text: 'replace toilet?', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 260, y: 780,
+      title: 'Phase plan',
+      phases: [
+        { label: 'Demo wallpaper + prime', meta: 'Sep — 1 wkd', status: 'todo' },
+        { label: 'Hang new paper', meta: 'Sep', status: 'todo' },
+        { label: 'Skirted sink DIY', meta: 'Oct — sewing', status: 'todo' },
+        { label: 'Lighting + styling', meta: 'Oct', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 820,
+      title: 'Sourcing',
+      items: [
+        { name: 'Dogwood wallpaper', vendor: 'Sister Parish', price: '$310/roll', url: '#' },
+        { name: 'Scalloped mirror 24"', vendor: 'Anthropologie', price: '$348', url: '#' },
+        { name: 'Gingham yardage', vendor: 'Rogers & Goffigon', price: '$54/yd', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1080, y: 820,
+      title: 'Paint palette',
+      chips: [
+        { name: 'Eating Room Red', vendor: 'Farrow & Ball', hex: '#8B3B36', use: 'walls (bold)', code: 'No. 43' },
+        { name: 'Pointing', vendor: 'Farrow & Ball', hex: '#EFE8DB', use: 'trim', code: 'No. 2003' },
+      ],
+    },
+  },
+
+  'nook': {
+    photos: [
+      {
+        id: 'p1', kind: 'placeholder',
+        x: 260, y: 260, w: 340, h: 260,
+        caption: 'built-in window seat',
+        src_note: 'tbd — plain english',
+        rot: -1.8,
+      },
+      {
+        id: 'p2', kind: 'placeholder',
+        x: 640, y: 280, w: 280, h: 320,
+        caption: 'library ladder',
+        src_note: 'tbd',
+        rot: 2,
+      },
+      {
+        id: 'p3', kind: 'placeholder',
+        x: 960, y: 260, w: 320, h: 280,
+        caption: 'brass picture light',
+        src_note: 'tbd — schafer',
+        rot: -1,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 660, y: 660, color: 'blue', rot: -3,
+        text: "Built-ins painted same as walls —\n'tonal' Plain English trick.",
+        author: 'M',
+      },
+      {
+        id: 's2', x: 980, y: 640, color: 'green', rot: 2.2,
+        text: 'Reading light essential.\nWired sconce vs. plug-in?',
+        author: 'W',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1380, y: 300, color: 'blue', label: 'tonal built-ins' },
+      { id: 't2', x: 1380, y: 340, color: 'green', label: 'window seat' },
+      { id: 't3', x: 1380, y: 380, color: 'red', label: 'brass sconce' },
+      { id: 't4', x: 1380, y: 420, color: 'yellow', label: 'cozy textile' },
+      { id: 't5', x: 1380, y: 460, color: 'blue', label: 'slanted ceiling' },
+    ],
+    list: {
+      id: 'l1', x: 1380, y: 540,
+      title: 'To-do',
+      sub: 'nook build',
+      items: [
+        { text: 'measure dormer + ceiling angles', done: true },
+        { text: 'sketch window seat', done: false },
+        { text: 'order plywood + trim', done: false },
+        { text: 'pick paint (1 color, all surfaces)', done: false },
+        { text: 'cushion fabric', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 260, y: 780,
+      title: 'Phase plan',
+      phases: [
+        { label: 'Sketch + measure', meta: 'Apr — 1 wk', status: 'done' },
+        { label: 'Build bench + bookcase', meta: 'May — wkds', status: 'active' },
+        { label: 'Paint tonal', meta: 'Jun', status: 'todo' },
+        { label: 'Cushion + styling', meta: 'Jul', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 840,
+      title: 'Sourcing',
+      items: [
+        { name: 'Mouse\'s Back paint', vendor: 'Farrow & Ball', price: '$120/gal', url: '#' },
+        { name: 'Library picture light 14"', vendor: 'Schoolhouse', price: '$329', url: '#' },
+        { name: 'Linen cushion fill', vendor: 'The Foam Factory', price: '$82', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1120, y: 840,
+      title: 'Paint palette',
+      chips: [
+        { name: "Mouse's Back", vendor: 'Farrow & Ball', hex: '#726958', use: 'walls + built-ins (tonal)', code: 'No. 40' },
+      ],
+    },
+  },
+
+  'laundry': {
+    photos: [
+      {
+        id: 'p1',
+        src: '/uploads/inspiration_images-1776621011524.jpeg',
+        x: 240, y: 260, w: 320, h: 280,
+        caption: 'Frederic — skirted counter + baskets',
+        src_note: 'Frederic / Max Kim-Bee',
+        rot: -1.5,
+      },
+      {
+        id: 'p2', kind: 'placeholder',
+        x: 620, y: 280, w: 260, h: 320,
+        caption: 'open basket shelf',
+        src_note: 'tbd',
+        rot: 1.8,
+      },
+      {
+        id: 'p3', kind: 'placeholder',
+        x: 920, y: 260, w: 320, h: 280,
+        caption: 'farmhouse sink + drying rack',
+        src_note: 'tbd',
+        rot: -2,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 640, y: 660, color: 'green', rot: -2.8,
+        text: "Skirt the counter — hides mess, adds pattern.\nNo upper cabs, just pegs.",
+        author: 'M',
+      },
+      {
+        id: 's2', x: 960, y: 640, color: 'yellow', rot: 2.5,
+        text: "Need drying rack (wall-mount, folds up)\nPot filler over sink?",
+        author: 'W',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1340, y: 300, color: 'red', label: 'gingham skirt' },
+      { id: 't2', x: 1340, y: 340, color: 'blue', label: 'open shelving' },
+      { id: 't3', x: 1340, y: 380, color: 'green', label: 'farmhouse sink' },
+      { id: 't4', x: 1340, y: 420, color: 'yellow', label: 'basket storage' },
+      { id: 't5', x: 1340, y: 460, color: 'red', label: 'peg rail' },
+    ],
+    list: {
+      id: 'l1', x: 1340, y: 540,
+      title: 'To-do',
+      sub: 'utility + style',
+      items: [
+        { text: 'remove upper cabinets (DIY)', done: false },
+        { text: 'install peg rail (DIY)', done: false },
+        { text: 'sew counter skirt (DIY)', done: false },
+        { text: 'plumb pot filler (plumber)', done: false },
+        { text: 'electrical for sconces (electrician)', done: false },
+        { text: 'basket audit — Amish market (DIY)', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 260, y: 780,
+      title: 'Phase plan',
+      phases: [
+        { label: 'Demo uppers', meta: 'Aug — 1 day', status: 'todo' },
+        { label: 'Plumb + electrical', meta: 'Aug', status: 'todo' },
+        { label: 'Peg rail + shelf', meta: 'Sep', status: 'todo' },
+        { label: 'Skirt + styling', meta: 'Sep', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 840,
+      title: 'Sourcing',
+      items: [
+        { name: 'Fireclay apron sink 30"', vendor: 'Signature Hardware', price: '$895', url: '#' },
+        { name: 'Green check linen', vendor: 'Rebecca Atwood', price: '$68/yd', url: '#' },
+        { name: 'Shaker peg rail 4ft', vendor: 'Etsy — WoodenHorse', price: '$95', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1100, y: 840,
+      title: 'Paint palette',
+      chips: [
+        { name: 'Green Smoke', vendor: 'Farrow & Ball', hex: '#6B7761', use: 'lower cabs', code: 'No. 47' },
+        { name: 'Pointing', vendor: 'Farrow & Ball', hex: '#EFE8DB', use: 'walls + upper', code: 'No. 2003' },
+      ],
+    },
+  },
+
+  'playroom': {
+    photos: [
+      {
+        id: 'p1', kind: 'placeholder',
+        x: 260, y: 260, w: 280, h: 380,
+        caption: 'library wall w/ rolling ladder',
+        src_note: 'tbd — gil schafer',
+        rot: -1.8,
+      },
+      {
+        id: 'p2', kind: 'placeholder',
+        x: 580, y: 300, w: 320, h: 260,
+        caption: 'floor-to-ceiling bookcase',
+        src_note: 'tbd',
+        rot: 1.5,
+      },
+      {
+        id: 'p3', kind: 'placeholder',
+        x: 940, y: 280, w: 300, h: 320,
+        caption: 'play table (round, kid-scale)',
+        src_note: 'tbd',
+        rot: -2,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 620, y: 660, color: 'yellow', rot: -3,
+        text: "Built-in books, floor to ceiling.\nRolling ladder??? (kids would love)",
+        author: 'M',
+      },
+      {
+        id: 's2', x: 970, y: 640, color: 'pink', rot: 2.8,
+        text: "Keep toys in baskets on low shelf.\nAdults books up high.",
+        author: 'W',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1340, y: 300, color: 'blue', label: 'built-in bookcase' },
+      { id: 't2', x: 1340, y: 340, color: 'green', label: 'basket storage' },
+      { id: 't3', x: 1340, y: 380, color: 'red', label: 'patterned rug' },
+      { id: 't4', x: 1340, y: 420, color: 'yellow', label: 'reading nook' },
+      { id: 't5', x: 1340, y: 460, color: 'blue', label: 'rolling ladder' },
+    ],
+    list: {
+      id: 'l1', x: 1340, y: 540,
+      title: 'To-do',
+      sub: 'library build',
+      items: [
+        { text: 'measure wall + ceiling', done: true },
+        { text: 'design bookcase (CAD)', done: false },
+        { text: 'buy plywood + trim', done: false },
+        { text: 'rug — hunt antique', done: false },
+        { text: 'kid table — thrift?', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 260, y: 780,
+      title: 'Phase plan',
+      phases: [
+        { label: 'Design + measure', meta: 'Apr', status: 'done' },
+        { label: 'Build carcasses', meta: 'May — wkds', status: 'todo' },
+        { label: 'Install + trim', meta: 'Jun', status: 'todo' },
+        { label: 'Paint + style', meta: 'Jul', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 840,
+      title: 'Sourcing',
+      items: [
+        { name: 'Maple plywood 3/4"', vendor: 'Home Depot', price: '$82/sheet', url: '#' },
+        { name: 'Rolling library ladder kit', vendor: 'Rockler', price: '$485', url: '#' },
+        { name: 'Antique Persian 6×9', vendor: 'eBay — saved search', price: '~$400', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1100, y: 840,
+      title: 'Paint palette',
+      chips: [
+        { name: 'Hague Blue', vendor: 'Farrow & Ball', hex: '#30414A', use: 'bookcase interior', code: 'No. 30' },
+        { name: 'School House White', vendor: 'Farrow & Ball', hex: '#E8DFCE', use: 'walls', code: 'No. 291' },
+      ],
+    },
+  },
+
+  'wetbar': {
+    photos: [
+      {
+        id: 'p1', kind: 'placeholder',
+        x: 280, y: 260, w: 340, h: 340,
+        caption: 'moody wet bar — dark cabinets, brass',
+        src_note: 'tbd — devol / plain english',
+        rot: -2.4,
+      },
+      {
+        id: 'p2', kind: 'placeholder',
+        x: 700, y: 300, w: 280, h: 260,
+        caption: 'fluted glass uppers, lit from behind',
+        src_note: 'tbd',
+        rot: 1.6,
+      },
+      {
+        id: 'p3', kind: 'placeholder',
+        x: 1040, y: 260, w: 240, h: 320,
+        caption: 'marble or soapstone counter — veiny',
+        src_note: 'tbd — aria stone',
+        rot: -1.4,
+      },
+    ],
+    stickies: [
+      {
+        id: 's1', x: 660, y: 640, color: 'yellow', rot: -3.2,
+        text: "deVOL q's:\n• Real Shaker vs. Haberdasher's?\n• Can we spec Miele espresso built-in?",
+        author: 'M',
+      },
+      {
+        id: 's2', x: 1020, y: 660, color: 'pink', rot: 2.6,
+        text: "Undercounter ice maker > mini fridge.\nWe will actually use ice.",
+        author: 'W',
+      },
+      {
+        id: 's3', x: 1260, y: 680, color: 'blue', rot: -2,
+        text: "deVOL handles everything end-to-end.\nOur job: decisions + site access.",
+        author: 'M',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1360, y: 300, color: 'blue', label: 'fluted glass cabs' },
+      { id: 't2', x: 1360, y: 340, color: 'red', label: 'built-in espresso' },
+      { id: 't3', x: 1360, y: 380, color: 'green', label: 'veined stone slab' },
+      { id: 't4', x: 1360, y: 420, color: 'yellow', label: 'brass bar faucet' },
+      { id: 't5', x: 1360, y: 460, color: 'red', label: 'backlit shelving' },
+    ],
+    list: {
+      id: 'l1', x: 1360, y: 540,
+      title: 'Our to-do',
+      sub: 'with deVOL',
+      items: [
+        { text: 'kickoff call w/ deVOL designer', done: true },
+        { text: 'send dims + photos of alcove', done: true },
+        { text: 'approve layout option A or B', done: false },
+        { text: 'pick cabinet style + finish', done: false },
+        { text: 'espresso machine decision (Miele vs La Marzocco)', done: false },
+        { text: 'stone slab — showroom walk w/ deVOL', done: false },
+        { text: 'confirm install week w/ contractor', done: false },
+      ],
+    },
+    timeline: {
+      id: 'tm1', x: 260, y: 780,
+      title: 'Phase plan — deVOL',
+      phases: [
+        { label: 'Kickoff + site survey', meta: 'Mar — done', status: 'done' },
+        { label: 'Design + quote', meta: 'Apr', status: 'active' },
+        { label: 'Sign-off + deposit', meta: 'May', status: 'todo' },
+        { label: 'Cabinetry build (deVOL shop)', meta: 'Jun–Jul — 8 wks lead', status: 'todo' },
+        { label: 'Install week', meta: 'Aug', status: 'todo' },
+        { label: 'Appliances + styling', meta: 'Sep', status: 'todo' },
+      ],
+    },
+    links: {
+      id: 'lk1', x: 760, y: 840,
+      title: 'Sourcing',
+      items: [
+        { name: 'Miele CM6350 built-in espresso', vendor: 'AJ Madison', price: '$2,699', url: '#' },
+        { name: 'U-Line undercounter ice maker', vendor: 'Appliances Connection', price: '$1,850', url: '#' },
+        { name: 'Waterworks Easton bar faucet — unlacquered brass', vendor: 'Waterworks', price: '$1,120', url: '#' },
+        { name: 'Calacatta Viola slab (3cm)', vendor: 'Aria Stone Gallery', price: '~$180/sqft', url: '#' },
+        { name: 'Reeded glass inserts (custom)', vendor: 'Semihandmade', price: 'quote', url: '#' },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1100, y: 840,
+      title: 'Paint palette',
+      chips: [
+        { name: 'Studio Green', vendor: 'Farrow & Ball', hex: '#2E3A30', use: 'lower cabinets', code: 'No. 93' },
+        { name: 'Wimborne White', vendor: 'Farrow & Ball', hex: '#EFE8D7', use: 'upper cabs + trim', code: 'No. 239' },
+        { name: 'Brass — unlacquered', vendor: 'n/a (metal)', hex: '#B08D42', use: 'hardware + faucet', code: '—' },
+      ],
+    },
+  },
+};
+
+export { ROOMS, UPLOADED_IMAGES, STARTER_BOARDS };
