@@ -2,7 +2,33 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import {
   PhotoPin, StickyPin, TagPin, ListPad, TimelineCard, LinksCard, PaintCard
 } from './Pins.jsx';
-import { ROOMS, UPLOADED_IMAGES, STARTER_BOARDS } from './data.js';
+import { ROOMS, STARTER_BOARDS } from './data.js';
+import { UPLOADED_IMAGES, UPLOADS_BY_ROOM } from './uploads.js';
+
+/* Build a starter board for a given room, auto-populating photos from
+   src/uploads/{roomId}/ if the starter doesn't already define any. */
+function buildStarterBoard(roomId) {
+  const starter = STARTER_BOARDS[roomId] || {};
+  const autoPhotos = UPLOADS_BY_ROOM[roomId] || [];
+  const photos = (starter.photos && starter.photos.length > 0)
+    ? starter.photos
+    : autoPhotos.map((p, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        return {
+          id: `auto-${roomId}-${i}`,
+          src: p.src,
+          x: 260 + col * 360,
+          y: 260 + row * 360,
+          w: 300,
+          h: 300,
+          caption: '',
+          src_note: '',
+          rot: ((i * 37) % 7) - 3,
+        };
+      });
+  return { ...starter, photos, strokes: [] };
+}
 
 const STORAGE_KEY = 'house-board-v1';
 const TWEAKS_KEY = 'house-board-tweaks-v1';
@@ -24,77 +50,33 @@ function App() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        // Migrate: ensure paint palette exists on every room if starter defines one
+        // Migration: inject any newly-added rooms using their starter board.
+        // Preserves user edits on existing rooms.
         if (parsed.boards) {
           ROOMS.forEach(r => {
-            // Inject any newly-added rooms (e.g. wetbar) using their starter
-            if (!parsed.boards[r.id] && STARTER_BOARDS[r.id]) {
-              parsed.boards[r.id] = { ...STARTER_BOARDS[r.id], strokes: [] };
+            if (!parsed.boards[r.id]) {
+              parsed.boards[r.id] = buildStarterBoard(r.id);
             }
+            // Ensure paint palette exists on rooms that have one in the starter
             const b = parsed.boards[r.id];
             if (b && !b.paint && STARTER_BOARDS[r.id] && STARTER_BOARDS[r.id].paint) {
               b.paint = STARTER_BOARDS[r.id].paint;
             }
           });
-        }
-        // Migrate: Frederic photo was mis-seeded in Playroom; belongs in Laundry.
-        // Swap photos that still reference the bar image with a placeholder in Playroom,
-        // and if Laundry still has the generic placeholder for p1, promote the real photo.
-        const FRED = 'uploads/inspiration_images-1776621011524.jpeg';
-        const pr = parsed.boards && parsed.boards.playroom;
-        if (pr && pr.photos) {
-          pr.photos = pr.photos.map(ph => (ph.src === FRED)
-            ? { ...ph, kind: 'placeholder', src: undefined, caption: 'library wall w/ rolling ladder', src_note: 'tbd — gil schafer' }
-            : ph);
-        }
-        const ld = parsed.boards && parsed.boards.laundry;
-        if (ld && ld.photos) {
-          const hasFred = ld.photos.some(ph => ph.src === FRED);
-          if (!hasFred) {
-            let replaced = false;
-            ld.photos = ld.photos.map(ph => {
-              if (!replaced && ph.kind === 'placeholder') {
-                replaced = true;
-                return { ...ph, kind: undefined, src: FRED, caption: 'Frederic — skirted counter + baskets', src_note: 'Frederic / Max Kim-Bee' };
-              }
-              return ph;
-            });
+          // If the saved currentRoom no longer exists, fall back to the first room.
+          if (!ROOMS.some(r => r.id === parsed.currentRoom)) {
+            parsed.currentRoom = ROOMS[0].id;
           }
-        }
-        // Migrate: rename "botanical gallery" tag to Shrigley zodiac on upstairs bath.
-        const bu = parsed.boards && parsed.boards['bath-up'];
-        if (bu && bu.tags) {
-          bu.tags = bu.tags.map(t =>
-            t.label === 'botanical gallery'
-              ? { ...t, label: 'Shrigley zodiac print' }
-              : t
-          );
-        }
-        // Migrate: initials E/J → M/W (Micaela + Will)
-        if (parsed.who === 'E') parsed.who = 'M';
-        else if (parsed.who === 'J') parsed.who = 'W';
-        if (parsed.boards) {
-          Object.values(parsed.boards).forEach(b => {
-            if (b && b.stickies) {
-              b.stickies = b.stickies.map(s => ({
-                ...s,
-                author: s.author === 'E' ? 'M' : s.author === 'J' ? 'W' : s.author,
-              }));
-            }
-          });
         }
         return parsed;
       }
     } catch(e) {}
     const boards = {};
     ROOMS.forEach(r => {
-      boards[r.id] = {
-        ...STARTER_BOARDS[r.id],
-        strokes: [],
-      };
+      boards[r.id] = buildStarterBoard(r.id);
     });
     return {
-      currentRoom: 'bath-up',
+      currentRoom: 'zuzu-bath',
       who: 'M',
       boards,
     };

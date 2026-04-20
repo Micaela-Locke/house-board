@@ -1,30 +1,33 @@
 /* ============================================================
-   Seed data — the 5 rooms and their starter boards
+   Seed data — the rooms and their starter boards.
+   Photos are auto-loaded from src/uploads/{roomId}/ via uploads.js;
+   everything else (paint, stickies, lists, timelines, links) lives
+   here as opinionated starter content.
 ============================================================ */
 
 const ROOMS = [
   {
-    id: 'nook',
+    id: 'captain-nook',
     num: '01',
-    name: 'Bedroom Nook',
+    name: "Captain's Nook",
     location: '3rd Floor',
     sheet: 'A-101',
     subtitle: 'Reading corner + built-ins',
     scope: 'diy',
   },
   {
-    id: 'bath-down',
+    id: 'powder-room',
     num: '02',
-    name: 'Downstairs Bath',
+    name: 'Powder Room',
     location: 'Ground Floor',
     sheet: 'A-102',
     subtitle: 'Powder room refresh',
     scope: 'diy',
   },
   {
-    id: 'bath-up',
+    id: 'zuzu-bath',
     num: '03',
-    name: 'Upstairs Bath',
+    name: "Zuzu's Bath",
     location: '2nd Floor',
     sheet: 'A-103',
     subtitle: 'Clawfoot + beadboard',
@@ -41,16 +44,16 @@ const ROOMS = [
     pro: 'Cabinetry contractor — TBD',
   },
   {
-    id: 'playroom',
+    id: 'library',
     num: '05',
-    name: 'Playroom / Library',
+    name: 'Library',
     location: 'Ground Floor',
     sheet: 'A-105',
     subtitle: 'Family room w/ books',
     scope: 'diy',
   },
   {
-    id: 'wetbar',
+    id: 'coffee-wet-bar',
     num: '06',
     name: 'Coffee + Wet Bar',
     location: 'Ground Floor',
@@ -59,44 +62,22 @@ const ROOMS = [
     scope: 'pro',
     pro: 'deVOL Kitchens — design + build',
   },
+  {
+    id: 'gym',
+    num: '07',
+    name: 'Home Gym',
+    location: 'Basement',
+    sheet: 'A-107',
+    subtitle: 'Strength + cardio',
+    scope: 'diy',
+  },
 ];
 
-/* Uploaded images in the project */
-const UPLOADED_IMAGES = [
-  '/uploads/inspiration_images-1776621006745.jpeg',
-  '/uploads/inspiration_images-1776621011524.jpeg',
-  '/uploads/inspiration_images-1776621016423.jpeg',
-];
-
-/* Starter boards — one per room, opinionated so the page never feels empty */
+/* Starter boards — one per room. `photos: []` is deliberate; photos are
+   merged in from src/uploads/{roomId}/ at runtime. */
 const STARTER_BOARDS = {
-  'bath-up': {
-    photos: [
-      {
-        id: 'p1',
-        src: '/uploads/inspiration_images-1776621016423.jpeg',
-        x: 280, y: 260, w: 340, h: 340,
-        caption: 'deVOL — blue beadboard + clawfoot',
-        src_note: 'Instagram, @devolkitchens',
-        rot: -2.2,
-      },
-      {
-        id: 'p2',
-        kind: 'placeholder',
-        x: 700, y: 300, w: 280, h: 260,
-        caption: 'brass shower fittings',
-        src_note: 'tbd — pinterest',
-        rot: 1.8,
-      },
-      {
-        id: 'p3',
-        kind: 'placeholder',
-        x: 1040, y: 260, w: 240, h: 320,
-        caption: 'encaustic floor tile',
-        src_note: 'tbd — bert & may',
-        rot: -1.2,
-      },
-    ],
+  'zuzu-bath': {
+    photos: [],
     stickies: [
       {
         id: 's1', x: 680, y: 620, color: 'yellow', rot: -3.5,
@@ -146,7 +127,7 @@ const STARTER_BOARDS = {
         { name: 'Setting Plaster eggshell', vendor: 'Farrow & Ball', price: '$120/gal', url: '#' },
         { name: 'Winchester beadboard', vendor: 'Home Depot', price: '$38/panel', url: '#' },
         { name: 'Windsor Clawfoot 66"', vendor: 'Signature Hardware', price: '$2,450', url: '#' },
-        { name: 'Purbeck tile 8×8', vendor: 'Bert & May', price: '$18/sqft', url: '#' },
+        { name: 'Trellis blue encaustic 8×8', vendor: 'Granada Tile', price: '$18/sqft', url: '#' },
       ],
     },
     paint: {
@@ -160,30 +141,8 @@ const STARTER_BOARDS = {
     },
   },
 
-  'bath-down': {
-    photos: [
-      {
-        id: 'p1', kind: 'placeholder',
-        x: 260, y: 260, w: 300, h: 280,
-        caption: 'skirted sink (gingham?)',
-        src_note: 'tbd — frederic mag',
-        rot: -1.5,
-      },
-      {
-        id: 'p2', kind: 'placeholder',
-        x: 600, y: 280, w: 260, h: 320,
-        caption: 'scalloped mirror',
-        src_note: 'tbd',
-        rot: 2.1,
-      },
-      {
-        id: 'p3', kind: 'placeholder',
-        x: 900, y: 260, w: 320, h: 260,
-        caption: 'wallpaper moment',
-        src_note: 'tbd — sister parish?',
-        rot: -1.8,
-      },
-    ],
+  'powder-room': {
+    photos: [],
     stickies: [
       {
         id: 's1', x: 640, y: 660, color: 'pink', rot: -2.5,
@@ -242,30 +201,8 @@ const STARTER_BOARDS = {
     },
   },
 
-  'nook': {
-    photos: [
-      {
-        id: 'p1', kind: 'placeholder',
-        x: 260, y: 260, w: 340, h: 260,
-        caption: 'built-in window seat',
-        src_note: 'tbd — plain english',
-        rot: -1.8,
-      },
-      {
-        id: 'p2', kind: 'placeholder',
-        x: 640, y: 280, w: 280, h: 320,
-        caption: 'library ladder',
-        src_note: 'tbd',
-        rot: 2,
-      },
-      {
-        id: 'p3', kind: 'placeholder',
-        x: 960, y: 260, w: 320, h: 280,
-        caption: 'brass picture light',
-        src_note: 'tbd — schafer',
-        rot: -1,
-      },
-    ],
+  'captain-nook': {
+    photos: [],
     stickies: [
       {
         id: 's1', x: 660, y: 660, color: 'blue', rot: -3,
@@ -311,7 +248,7 @@ const STARTER_BOARDS = {
       id: 'lk1', x: 760, y: 840,
       title: 'Sourcing',
       items: [
-        { name: 'Mouse\'s Back paint', vendor: 'Farrow & Ball', price: '$120/gal', url: '#' },
+        { name: "Mouse's Back paint", vendor: 'Farrow & Ball', price: '$120/gal', url: '#' },
         { name: 'Library picture light 14"', vendor: 'Schoolhouse', price: '$329', url: '#' },
         { name: 'Linen cushion fill', vendor: 'The Foam Factory', price: '$82', url: '#' },
       ],
@@ -326,30 +263,7 @@ const STARTER_BOARDS = {
   },
 
   'laundry': {
-    photos: [
-      {
-        id: 'p1',
-        src: '/uploads/inspiration_images-1776621011524.jpeg',
-        x: 240, y: 260, w: 320, h: 280,
-        caption: 'Frederic — skirted counter + baskets',
-        src_note: 'Frederic / Max Kim-Bee',
-        rot: -1.5,
-      },
-      {
-        id: 'p2', kind: 'placeholder',
-        x: 620, y: 280, w: 260, h: 320,
-        caption: 'open basket shelf',
-        src_note: 'tbd',
-        rot: 1.8,
-      },
-      {
-        id: 'p3', kind: 'placeholder',
-        x: 920, y: 260, w: 320, h: 280,
-        caption: 'farmhouse sink + drying rack',
-        src_note: 'tbd',
-        rot: -2,
-      },
-    ],
+    photos: [],
     stickies: [
       {
         id: 's1', x: 640, y: 660, color: 'green', rot: -2.8,
@@ -411,30 +325,8 @@ const STARTER_BOARDS = {
     },
   },
 
-  'playroom': {
-    photos: [
-      {
-        id: 'p1', kind: 'placeholder',
-        x: 260, y: 260, w: 280, h: 380,
-        caption: 'library wall w/ rolling ladder',
-        src_note: 'tbd — gil schafer',
-        rot: -1.8,
-      },
-      {
-        id: 'p2', kind: 'placeholder',
-        x: 580, y: 300, w: 320, h: 260,
-        caption: 'floor-to-ceiling bookcase',
-        src_note: 'tbd',
-        rot: 1.5,
-      },
-      {
-        id: 'p3', kind: 'placeholder',
-        x: 940, y: 280, w: 300, h: 320,
-        caption: 'play table (round, kid-scale)',
-        src_note: 'tbd',
-        rot: -2,
-      },
-    ],
+  'library': {
+    photos: [],
     stickies: [
       {
         id: 's1', x: 620, y: 660, color: 'yellow', rot: -3,
@@ -495,30 +387,8 @@ const STARTER_BOARDS = {
     },
   },
 
-  'wetbar': {
-    photos: [
-      {
-        id: 'p1', kind: 'placeholder',
-        x: 280, y: 260, w: 340, h: 340,
-        caption: 'moody wet bar — dark cabinets, brass',
-        src_note: 'tbd — devol / plain english',
-        rot: -2.4,
-      },
-      {
-        id: 'p2', kind: 'placeholder',
-        x: 700, y: 300, w: 280, h: 260,
-        caption: 'fluted glass uppers, lit from behind',
-        src_note: 'tbd',
-        rot: 1.6,
-      },
-      {
-        id: 'p3', kind: 'placeholder',
-        x: 1040, y: 260, w: 240, h: 320,
-        caption: 'marble or soapstone counter — veiny',
-        src_note: 'tbd — aria stone',
-        rot: -1.4,
-      },
-    ],
+  'coffee-wet-bar': {
+    photos: [],
     stickies: [
       {
         id: 's1', x: 660, y: 640, color: 'yellow', rot: -3.2,
@@ -590,6 +460,41 @@ const STARTER_BOARDS = {
       ],
     },
   },
+
+  'gym': {
+    photos: [],
+    stickies: [
+      {
+        id: 's1', x: 640, y: 640, color: 'yellow', rot: -2.5,
+        text: "Rubber floor mats over existing concrete?\nMirror wall for form check.",
+        author: 'M',
+      },
+    ],
+    tags: [
+      { id: 't1', x: 1340, y: 300, color: 'blue', label: 'mirror wall' },
+      { id: 't2', x: 1340, y: 340, color: 'green', label: 'rubber flooring' },
+      { id: 't3', x: 1340, y: 380, color: 'red', label: 'cable stack' },
+      { id: 't4', x: 1340, y: 420, color: 'yellow', label: 'airflow / dehumidifier' },
+    ],
+    list: {
+      id: 'l1', x: 1340, y: 500,
+      title: 'To-do',
+      sub: 'basement gym',
+      items: [
+        { text: 'measure ceiling height + joists', done: false },
+        { text: 'floor plan — equipment layout', done: false },
+        { text: 'order rubber flooring', done: false },
+        { text: 'dehumidifier research', done: false },
+      ],
+    },
+    paint: {
+      id: 'pt1', x: 1080, y: 820,
+      title: 'Paint palette',
+      chips: [
+        { name: 'Down Pipe', vendor: 'Farrow & Ball', hex: '#56605D', use: 'walls', code: 'No. 26' },
+      ],
+    },
+  },
 };
 
-export { ROOMS, UPLOADED_IMAGES, STARTER_BOARDS };
+export { ROOMS, STARTER_BOARDS };
