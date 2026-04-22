@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# SST
+.sst
+sst-env.d.ts
+
+# AWS
+.aws-sam/
+
+# Env files
+.env
+.env.*.local
+
+# Workspace node_modules
+packages/*/node_modules
+packages/*/dist

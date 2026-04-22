@@ -1,4 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { UPLOADS_BY_ROOM } from './uploads.js';
+
+/* Resolve a photo item to a live image URL.
+   - If `uploadRef: { room, filename }` is set, look up the current Vite URL.
+   - Otherwise fall back to `src` (web URLs, legacy paths).
+   Returns null if the uploadRef points to a file that's no longer in the folder. */
+function resolvePhotoSrc(item) {
+  if (item.uploadRef) {
+    const list = UPLOADS_BY_ROOM[item.uploadRef.room] || [];
+    const match = list.find(p => p.filename === item.uploadRef.filename);
+    return match ? match.src : null;
+  }
+  return item.src || null;
+}
 
 /* ============================================================
    Draggable hook — captures start position at mousedown.
@@ -81,14 +95,30 @@ function PhotoPin({ item, onChange, onDelete, zoom }) {
             drop photo<br/>here
           </div>
         </div>
-      ) : (
-        <img
-          src={item.src}
-          style={{ width: item.w - 20, height: item.h }}
-          draggable={false}
-          onError={(e) => { e.target.style.display = 'none'; }}
-        />
-      )}
+      ) : (() => {
+        const resolvedSrc = resolvePhotoSrc(item);
+        if (!resolvedSrc) {
+          // File was deleted from the folder — show a clear placeholder
+          return (
+            <div className="photo placeholder" style={{ width: item.w - 20, height: item.h, padding: 0, boxShadow: 'none' }}>
+              <div className="ph-label" style={{ fontSize: 11, color: '#a33' }}>
+                missing file<br/>
+                <span style={{ fontSize: 9, opacity: 0.7 }}>
+                  {item.uploadRef ? item.uploadRef.filename : 'no source'}
+                </span>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <img
+            src={resolvedSrc}
+            style={{ width: item.w - 20, height: item.h }}
+            draggable={false}
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+        );
+      })()}
 
       <div className="caption">
         <span

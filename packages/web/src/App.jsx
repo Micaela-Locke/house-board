@@ -17,7 +17,7 @@ function buildStarterBoard(roomId) {
         const row = Math.floor(i / 3);
         return {
           id: `auto-${roomId}-${i}`,
-          src: p.src,
+          uploadRef: { room: roomId, filename: p.filename },
           x: 260 + col * 360,
           y: 260 + row * 360,
           w: 300,
@@ -63,6 +63,25 @@ function App() {
               b.paint = STARTER_BOARDS[r.id].paint;
             }
           });
+          // Migration: any photo with a src like "/src/uploads/ROOM/FILE"
+          // gets converted to uploadRef form. This is a one-time upgrade for
+          // existing localStorage state so photos don't break after Vite restart.
+          Object.entries(parsed.boards).forEach(([roomId, b]) => {
+            if (b && b.photos) {
+              b.photos = b.photos.map(p => {
+                if (!p.uploadRef && typeof p.src === 'string') {
+                  // Match /src/uploads/ROOM/FILENAME (possibly with ?query and URL-encoded spaces)
+                  const m = p.src.match(/\/src\/uploads\/([^/]+)\/([^?]+)/);
+                  if (m) {
+                    const filename = decodeURIComponent(m[2]);
+                    const { src, ...rest } = p;
+                    return { ...rest, uploadRef: { room: m[1], filename } };
+                  }
+                }
+                return p;
+              });
+            }
+          });
           // If the saved currentRoom no longer exists, fall back to the first room.
           if (!ROOMS.some(r => r.id === parsed.currentRoom)) {
             parsed.currentRoom = ROOMS[0].id;
@@ -105,6 +124,24 @@ function App() {
   useEffect(() => {
     localStorage.setItem(TWEAKS_KEY, JSON.stringify(tweaks));
   }, [tweaks]);
+
+  // Manual save — useful as a deliberate "commit this arrangement" action.
+  // Also writes to a second slot (house-board-snapshot) so we have a
+  // known-good version even if the auto-save state gets corrupted later.
+  const [saveStatus, setSaveStatus] = useState(''); // '', 'saving', 'saved'
+  const saveNow = () => {
+    setSaveStatus('saving');
+    try {
+      const payload = JSON.stringify(state);
+      localStorage.setItem(STORAGE_KEY, payload);
+      localStorage.setItem('house-board-snapshot', payload);
+      setSaveStatus('saved');
+      setTimeout(() => setSaveStatus(''), 1500);
+    } catch (e) {
+      alert('Save failed: ' + (e.message || e));
+      setSaveStatus('');
+    }
+  };
 
   // Edit mode / Tweaks wiring
   useEffect(() => {
@@ -186,6 +223,47 @@ function App() {
   };
 
   const addPhoto = () => setPicker({ kind: 'photo' });
+
+  /* Rescan the current room's uploads folder and add any photos that
+     aren't already on the board. Doesn't touch existing photos (so
+     user-moved/resized/captioned ones are preserved), doesn't touch
+     anything else on the board. */
+  const rescanPhotos = () => {
+    const roomId = state.currentRoom;
+    const folderPhotos = UPLOADS_BY_ROOM[roomId] || [];
+    const existing = board.photos || [];
+    // A photo "matches" a folder file if its uploadRef.filename matches,
+    // OR (legacy) its src contains the filename.
+    const hasFilename = (filename) =>
+      existing.some(p =>
+        (p.uploadRef && p.uploadRef.filename === filename) ||
+        (p.src && p.src.includes(encodeURIComponent(filename))) ||
+        (p.src && p.src.includes(filename))
+      );
+    const newOnes = folderPhotos
+      .filter(fp => !hasFilename(fp.filename))
+      .map((fp, i) => {
+        const idx = existing.length + i;
+        const col = idx % 3;
+        const row = Math.floor(idx / 3);
+        return {
+          id: `auto-${roomId}-${Date.now()}-${i}`,
+          uploadRef: { room: roomId, filename: fp.filename },
+          x: 260 + col * 360,
+          y: 260 + row * 360,
+          w: 300,
+          h: 300,
+          caption: '',
+          src_note: '',
+          rot: ((idx * 37) % 7) - 3,
+        };
+      });
+    if (newOnes.length === 0) {
+      alert('No new photos found in this room\'s folder.');
+      return;
+    }
+    patchBoard({ photos: [...existing, ...newOnes] });
+  };
 
   const addList = () => {
     const id = 'l' + Date.now();
@@ -532,6 +610,11 @@ function App() {
       {/* Add menu */}
       <div className="addmenu">
         <button onClick={addPhoto}><span className="glyph">▢</span>Photo</button>
+        <button onClick={rescanPhotos} title="Pull in any new images from this room's uploads folder"><span className="glyph">↻</span>Rescan</button>
+        <button onClick={saveNow} title="Write current state to localStorage + snapshot slot">
+          <span className="glyph">◇</span>
+          {saveStatus === 'saving' ? 'saving…' : saveStatus === 'saved' ? 'saved ✓' : 'Save'}
+        </button>
         <button onClick={() => addSticky('yellow')}><span className="glyph">✎</span>Note</button>
         <button onClick={addTag}><span className="glyph">◉</span>Tag</button>
         <button onClick={() => {
